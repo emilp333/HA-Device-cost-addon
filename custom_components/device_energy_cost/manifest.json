@@ -1,0 +1,10 @@
+{
+  "domain": "device_energy_cost",
+  "name": "Device Energy Cost",
+  "version": "1.0.0",
+  "documentation": "https://github.com/yourusername/device_energy_cost",
+  "requirements": [],
+  "dependencies": ["recorder", "energy"],
+  "codeowners": ["@yourusername"],
+  "iot_class": "local_polling"
+}
