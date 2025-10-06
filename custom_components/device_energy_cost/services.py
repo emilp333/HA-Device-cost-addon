@@ -6,11 +6,10 @@ from homeassistant.components.recorder.statistics import (
     async_add_external_statistics,
     statistics_during_period,
 )
-from homeassistant.const import UnitOfEnergy
+from homeassistant.const import STATE_UNKNOWN
 
 _LOGGER = logging.getLogger(__name__)
 DOMAIN = "device_energy_cost"
-
 
 async def async_register_services(hass: HomeAssistant):
     async def handle_backfill(call: ServiceCall):
@@ -22,6 +21,7 @@ async def async_register_services(hass: HomeAssistant):
             _LOGGER.warning("Energy configuration not found; cannot backfill.")
             return
 
+        # Find grid price entity
         price_entity = None
         for source in data.get("energy_sources", []):
             if source.get("type") == "grid" and source.get("price_entity"):
@@ -43,9 +43,7 @@ async def async_register_services(hass: HomeAssistant):
 
         for dev_entity in devices:
             cost_entity_id = f"{dev_entity}_cost"
-            await _async_backfill_single(
-                hass, dev_entity, price_entity, cost_entity_id, start, now
-            )
+            await _async_backfill_single(hass, dev_entity, price_entity, cost_entity_id, start, now)
 
         _LOGGER.info("Device Energy Cost backfill completed.")
 

@@ -1,2 +1,2 @@
 DOMAIN = "device_energy_cost"
-UPDATE_INTERVAL = 3600  # seconds
+UPDATE_INTERVAL = 300  # seconds (5 minutes)
