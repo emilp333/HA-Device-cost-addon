@@ -1,32 +1,28 @@
 # Device Energy Cost Integration
 
-This custom Home Assistant integration extends the Energy Dashboard with per-device **energy cost calculations**,
-using the same energy sources and price entities you already configured.
+This custom Home Assistant integration adds **per-device energy cost calculation** to the Energy Dashboard.
 
-## ⚙️ Installation
+## Installation
 
-1. Copy the `device_energy_cost` folder into your Home Assistant `config/custom_components/` directory.
+1. Copy `custom_components/device_energy_cost/` into your HA `config/` directory.
 2. Restart Home Assistant.
-3. Check **Developer Tools → Services** for `device_energy_cost.backfill`.
+3. You should see sensors appear for each device in your Energy Dashboard.
 
-## 🧠 Usage
+## Usage
 
-You can backfill cost data for a single device to test:
-
+Backfill one device to test:
 ```yaml
 service: device_energy_cost.backfill
 data:
   entity_id: sensor.dishwasher_energy_cost
-  days: 60
+  days: 7
 ```
 
-Or run it without specifying an entity to backfill all devices configured in your Energy Dashboard.
+Backfill all devices (default 30 days if `days` is omitted):
+```yaml
+service: device_energy_cost.backfill
+```
 
-The cost is stored in Home Assistant’s native long-term statistics, just like total cost,
-and appears in the **Energy Dashboard** after refreshing.
+The costs are stored in HA's **long-term statistics**, just like the native total cost.
 
-## ⚠️ Notes
-
-- Currency automatically matches your Home Assistant configuration.
-- Default backfill period is 30 days.
-- Results are written directly to the statistics database.
+Currency is automatically pulled from Home Assistant configuration.
